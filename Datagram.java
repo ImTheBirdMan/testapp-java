@@ -41,20 +41,28 @@ public class Datagram {
        System.out.println("Socket is bound?");
        System.out.println(socket.isBound());
 
-      //while(true){
-         while (!socket.isClosed()) {
+        //while(true){
+        while (!socket.isClosed()) {
              System.out.println("1");
              socket.receive(packet);
              System.out.println("2");
-             String data = new String(packet.getData()); // returns buf
+             String data = new String(packet.getData()); // returns buf?
+
+             /* *
+              * PACKET FORMAT
+              * String
+              * "int(x),int(y),int(z)"
+              *
+              * */
              System.out.println("Raw data: " + data);
              String[] dataParsed = data.split(",");
 
              int x = Integer.parseInt(dataParsed[0]);
              int y = Integer.parseInt(dataParsed[1]);
              int z = Integer.parseInt(dataParsed[2]);
+             int theta = Integer.parseInt(dataParsed[3]);
 
-             String line = ("x:" + x + " y: " + y + " z:" + z);
+             String line = ("x:" + x + " y: " + y + " z:" + z + " orientation:" + theta);
              System.out.println(line);
          }
       //}
