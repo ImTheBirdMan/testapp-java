@@ -40,29 +40,55 @@ public class Datagram {
 
        System.out.println("Socket is bound?");
        System.out.println(socket.isBound());
+       int xlast = 0;
+       int x = xlast;
+
+       int ylast = 0;
+       int y = ylast;
+
+       int zlast = 0;
+       int z = zlast;
+
+       int thetalast = 0;
+       int theta = thetalast;
 
         //while(true){
         while (!socket.isClosed()) {
-             System.out.println("1");
              socket.receive(packet);
-             System.out.println("2");
              String data = new String(packet.getData()); // returns buf?
 
              /* *
               * PACKET FORMAT
               * String
-              * "int(x),int(y),int(z)"
+              * "int(x),int(y),int(z),int(theta)"
               *
               * */
-             System.out.println("Raw data: " + data);
-             String[] dataParsed = data.split(",");
+            //System.out.println("Raw data: " + data);
 
-             int x = Integer.parseInt(dataParsed[0]);
-             int y = Integer.parseInt(dataParsed[1]);
-             int z = Integer.parseInt(dataParsed[2]);
-             int theta = Integer.parseInt(dataParsed[3]);
+            String[] dataParsed = data.split(":");
+            try {
+                // good packet
+                x = Integer.parseInt(dataParsed[0]);
+                xlast = x;
+                y = Integer.parseInt(dataParsed[1]);
+                ylast = y;
+                z = Integer.parseInt(dataParsed[2]);
+                zlast = z;
+                theta = Integer.parseInt(dataParsed[3].trim());
+                thetalast = theta;
+                // good packet
+            } catch (java.lang.NumberFormatException e) {
+                //corrupted packet;
+                x = xlast;
+                y = ylast;
+                z = zlast;
+                theta = thetalast;
+            }
 
-             String line = ("x:" + x + " y: " + y + " z:" + z + " orientation:" + theta);
+             String line = ("\n          x:" + x +
+                            "\n          y:" + y +
+                            "\n          z:" + z +
+                            "\norientation:" + theta);
              System.out.println(line);
          }
       //}
