@@ -46,35 +46,16 @@ public class Datagram {
              System.out.println("1");
              socket.receive(packet);
              System.out.println("2");
-             String data = new String(packet.getData());
-             System.out.println(data);
-             /*
+             String data = new String(packet.getData()); // returns buf
+             System.out.println("Raw data: " + data);
              String[] dataParsed = data.split(",");
-             float timestamp = Float.parseFloat(dataParsed[0]);
-             float sensortype = Float.parseFloat(dataParsed[1]);
-             float x = Float.parseFloat(dataParsed[2]);
-             float y = Float.parseFloat(dataParsed[3]);
-             float z = Float.parseFloat(dataParsed[4]);
-             String sensorname = new String();
-             if (sensortype == 1) {
-                sensorname = "GPS";
-             }
-             else if (sensortype == 2) {
-                sensorname = "Magnetometer";
-             }
-             else if (sensortype == 3) {
-                sensorname = "Accelerometer";
-             }
-             else if (sensortype == 4) {
-                sensorname = "Gyroscope";
-             }
-             else if (true) {
-                sensorname = "Unknown";
-             }
-             Date date = new Date();String line = ("Timestamp " + timestamp + ", local date " + date.toString() + ", sensor " + sensorname + ", x " + x + ", y " + y + ", z " + z);
+
+             int x = Integer.parseInt(dataParsed[0]);
+             int y = Integer.parseInt(dataParsed[1]);
+             int z = Integer.parseInt(dataParsed[2]);
+
+             String line = ("x:" + x + " y: " + y + " z:" + z);
              System.out.println(line);
-             */
-         
          }
       //}
        System.out.print("Enter any character to stop server: ");
