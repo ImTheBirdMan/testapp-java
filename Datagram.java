@@ -17,8 +17,9 @@ public class Datagram {
    
    public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
       DatagramSocket socket = new DatagramSocket();
-      SocketAddress addr = socket.getLocalSocketAddress(); 
-      socket.bind(addr);
+      SocketAddress addr = socket.getLocalSocketAddress();
+      System.out.println(addr);
+      //socket.bind(addr);
       byte[] buf = new byte[64];
       DatagramPacket packet = new DatagramPacket(buf, buf.length);
       int mPort = socket.getPort();
