@@ -77,7 +77,7 @@ public class Datagram extends Gui{
    
       System.out.println("Socket is bound?");
       System.out.println(socket.isBound());
-   
+      GraphPanel g = new GraphPanel();
         //while(true){
       while (!socket.isClosed()) {
          socket.receive(packet);
@@ -117,14 +117,8 @@ public class Datagram extends Gui{
                             "\n          z:" + z +
                             "\norientation:" + theta);
          System.out.println(line);
-         GraphPanel g = new GraphPanel(); 
-         g.populateGraph(x, count); 
-         SwingUtilities.invokeLater(
-            new Runnable() {
-               public void run() {
-                  g.createAndShowGui();
-               }
-            });
+         
+         g.populateGraph(x, count);
          count++; 
       }
       //}
@@ -133,5 +127,13 @@ public class Datagram extends Gui{
       char ch = (char) System.in.read();
       jmdns.unregisterAllServices();
       jmdns.unregisterAllServices();
+       
+      SwingUtilities.invokeLater(
+            new Runnable() {
+               public void run() {
+                  g.createAndShowGui();
+               }
+            });
+   
    }
 }
