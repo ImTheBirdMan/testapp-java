@@ -19,11 +19,33 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionListener; 
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
+import javax.swing.*;
+import javax.swing.SwingUtilities;
 
 public class Datagram extends Gui{
    public static String mServiceName = "JmDNS Server";
    public static final String SERVICE_TYPE = "_IAmTheBirdman._udp.local";
+   static int xlast = 0;
+   static int x = xlast;
+   static int ylast = 0;
+   static int y = ylast;
+   static int zlast = 0;
+   static int z = zlast;
+   static int thetalast = 0;
+   static int theta = thetalast;
+   static int count = 0; 
    
+   
+   public static int getXlast(){
+      return xlast; 
+   }
+   
+   public static int getYlast(){
+      return ylast;
+   }
+   public static int getCount(){
+      return count; 
+   }
    public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
         
         
@@ -55,17 +77,6 @@ public class Datagram extends Gui{
    
       System.out.println("Socket is bound?");
       System.out.println(socket.isBound());
-      int xlast = 0;
-      int x = xlast;
-   
-      int ylast = 0;
-      int y = ylast;
-   
-      int zlast = 0;
-      int z = zlast;
-   
-      int thetalast = 0;
-      int theta = thetalast;
    
         //while(true){
       while (!socket.isClosed()) {
@@ -106,6 +117,15 @@ public class Datagram extends Gui{
                             "\n          z:" + z +
                             "\norientation:" + theta);
          System.out.println(line);
+         GraphPanel g = new GraphPanel(); 
+         g.populateGraph(x, count); 
+         SwingUtilities.invokeLater(
+            new Runnable() {
+               public void run() {
+                  g.createAndShowGui();
+               }
+            });
+         count++; 
       }
       //}
       System.out.print("Enter any character to stop server: ");
