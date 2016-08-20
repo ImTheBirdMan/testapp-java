@@ -80,7 +80,7 @@ public class GraphPanel extends JPanel {
       }
    
       // and for x axis
-      for (int i = 0; i < 50; i++) {
+      for (int i = 0; i < 1000; i++) {
          if (Datagram.getCount() > 1) {
             int x0 = i * (getWidth() - padding * 2 - labelPadding) / (Datagram.getCount()) + padding + labelPadding;
             int x1 = x0;
