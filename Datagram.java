@@ -120,6 +120,9 @@ public class Datagram extends Gui{
          
          g.populateGraph(x, count);
          count++; 
+         if (count >= 1000){
+            break; 
+         }
       }
       //}
       System.out.print("Enter any character to stop server: ");
