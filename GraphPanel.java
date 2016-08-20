@@ -25,7 +25,7 @@ public class GraphPanel extends JPanel {
    private Color gridColor = new Color(200, 200, 200, 200);
    private static final Stroke GRAPH_STROKE = new BasicStroke(2f);
    private int pointWidth = 3;
-   private int numberYDivisions = 10;
+   private int numberYDivisions = 50;
    //private List<Double> scores;
 
 /*
@@ -40,7 +40,7 @@ public class GraphPanel extends JPanel {
       int x1 = (int) Datagram.getXlast();
       int y1 = (int) Datagram.getCount();//currently the y on graph is plotting packet number
       graphPoints.add(new Point(x1, y1));
-
+   
    }
    @Override
    protected void paintComponent(Graphics g) {
@@ -62,6 +62,7 @@ public class GraphPanel extends JPanel {
    
       // create hatch marks and grid lines for y axis.
       for (int i = 0; i < numberYDivisions + 1; i++) {
+         int j = 0; 
          int x0 = padding + labelPadding;
          int x1 = pointWidth + padding + labelPadding;
          int y0 = getHeight() - ((i * (getHeight() - padding * 2 - labelPadding)) / numberYDivisions + padding + labelPadding);
@@ -70,7 +71,7 @@ public class GraphPanel extends JPanel {
             g2.setColor(gridColor);
             g2.drawLine(padding + labelPadding + 1 + pointWidth, y0, getWidth() - padding, y1);
             g2.setColor(Color.BLACK);
-            String yLabel = Integer.toString(Datagram.getCount());
+            String yLabel = Integer.toString(j++);
             FontMetrics metrics = g2.getFontMetrics();
             int labelWidth = metrics.stringWidth(yLabel);
             g2.drawString(yLabel, x0 - labelWidth - 5, y0 + (metrics.getHeight() / 2) - 3);
@@ -79,7 +80,7 @@ public class GraphPanel extends JPanel {
       }
    
       // and for x axis
-      for (int i = 0; i < Datagram.getCount()+1; i++) {
+      for (int i = 0; i < 50; i++) {
          if (Datagram.getCount() > 1) {
             int x0 = i * (getWidth() - padding * 2 - labelPadding) / (Datagram.getCount()) + padding + labelPadding;
             int x1 = x0;
