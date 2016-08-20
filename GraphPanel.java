@@ -35,31 +35,29 @@ public class GraphPanel extends JPanel {
 */
    private static List<Point> graphPoints = new ArrayList<>();
 
-   public static void populateGraph(int x, int y){
+   public void populateGraph(int x, int y){
       List<Point> graphPoints = new ArrayList<>();
       int x1 = (int) Datagram.getXlast();
       int y1 = (int) Datagram.getCount();//currently the y on graph is plotting packet number
       graphPoints.add(new Point(x1, y1));
-
+      repaint();
    }
+
+
    @Override
    protected void paintComponent(Graphics g) {
       super.paintComponent(g);
       Graphics2D g2 = (Graphics2D) g;
       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-   
+
       double xScale = ((double) getWidth() - (2 * padding) - labelPadding) / 100;
       double yScale = ((double) getHeight() - 2 * padding - labelPadding) / 100;
-   
-      
-     
-      
-   
+
       // draw white background
       g2.setColor(Color.WHITE);
       g2.fillRect(padding + labelPadding, padding, getWidth() - (2 * padding) - labelPadding, getHeight() - 2 * padding - labelPadding);
       g2.setColor(Color.BLACK);
-   
+
       // create hatch marks and grid lines for y axis.
       for (int i = 0; i < numberYDivisions + 1; i++) {
          int x0 = padding + labelPadding;
@@ -77,7 +75,7 @@ public class GraphPanel extends JPanel {
          }
          g2.drawLine(x0, y0, x1, y1);
       }
-   
+
       // and for x axis
       for (int i = 0; i < Datagram.getCount()+1; i++) {
          if (Datagram.getCount() > 1) {
@@ -97,11 +95,11 @@ public class GraphPanel extends JPanel {
             g2.drawLine(x0, y0, x1, y1);
          }
       }
-   
-      // create x and y axes 
+
+      // create x and y axes
       g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, padding + labelPadding, padding);
       g2.drawLine(padding + labelPadding, getHeight() - padding - labelPadding, getWidth() - padding, getHeight() - padding - labelPadding);
-   
+
       Stroke oldStroke = g2.getStroke();
       g2.setColor(lineColor);
       g2.setStroke(GRAPH_STROKE);
