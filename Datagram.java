@@ -48,6 +48,7 @@ public class Datagram extends Gui{
    }
    public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
 
+<<<<<<< Updated upstream
       DatagramSocket socket = new DatagramSocket();
       SocketAddress addr = socket.getLocalSocketAddress();
       System.out.println(addr);
@@ -83,6 +84,49 @@ public class Datagram extends Gui{
               * "int(x),int(y),int(z),int(theta)"
               *
               * */
+=======
+public class Datagram {
+    public static String mServiceName = "JmDNS Server";
+    public static final String SERVICE_TYPE = "_IAmTheBirdman._udp.local";
+
+    public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
+        new Gui(800, 600);
+        byte[] buf = new byte[64];
+        DatagramSocket socket = new DatagramSocket();
+
+        SocketAddress addr = socket.getLocalSocketAddress();
+        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+        int mPort = socket.getLocalPort();
+        JmDNS jmdns = JmDNS.create();
+
+        ServiceInfo info = ServiceInfo.create(SERVICE_TYPE, mServiceName, mPort, "App service");
+        
+        jmdns.unregisterAllServices();
+        jmdns.registerService(info);
+        System.out.println("Registered service at:");
+        System.out.println(InetAddress.getLocalHost().getHostAddress() + ":" + mPort);
+        System.out.println("Bound: " + socket.isBound());
+
+        int xlast = 0;
+        int x = xlast;
+        int ylast = 0;
+        int y = ylast;
+        int zlast = 0;
+        int z = zlast;
+        int thetalast = 0;
+        int theta = thetalast;
+
+        while (!socket.isClosed()) {
+            socket.receive(packet);
+            String data = new String(packet.getData()); // returns buf?
+
+             /*
+             * PACKET FORMAT
+             * String
+             * "int(x),int(y),int(z),int(theta)"
+             *
+             */
+>>>>>>> Stashed changes
             //System.out.println("Raw data: " + data);
       
          String[] dataParsed = data.split(":");
