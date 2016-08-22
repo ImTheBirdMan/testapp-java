@@ -45,7 +45,7 @@ public class XYLineChart extends JFrame {
       String xAxisLabel = "X";
       String yAxisLabel = "Packet Count";
    
-      //XYDataset dataset = createDataset();
+      XYDataset dataset = createDataset();
    
       JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
             xAxisLabel, yAxisLabel, dataset);

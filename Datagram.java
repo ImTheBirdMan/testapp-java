@@ -132,8 +132,7 @@ public class Datagram extends Gui{
       SwingUtilities.invokeLater(
             new Runnable() {
                public void run() {
-                  plot.createDataset();
-                  plot.createChartPanel().setVisible(true); 
+                 plot.setVisible(true); 
                }
             });
    
