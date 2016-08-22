@@ -28,7 +28,7 @@ import java.util.List;
 
 
 public class XYLineChart extends JFrame {
-  XYSeriesCollection dataset = new XYSeriesCollection();
+  static XYSeriesCollection dataset = new XYSeriesCollection();
    static boolean autoSort = false;
    static XYSeries series = new XYSeries("Object", autoSort);
    public XYLineChart() {

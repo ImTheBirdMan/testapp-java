@@ -133,7 +133,7 @@ public class Datagram extends Gui{
             new Runnable() {
                public void run() {
                   plot.createDataset();
-                  plot.createChartPanel(); 
+                  plot.createChartPanel().setVisible(true); 
                }
             });
    
