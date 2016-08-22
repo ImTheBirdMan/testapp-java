@@ -34,25 +34,8 @@ public class Datagram extends Gui{
    static int thetalast = 0;
    static int theta = thetalast;
    static int count = 0; 
-   
-   
-   public static int getXlast(){
-      return x; 
-   }
-   
-   public static int getYlast(){
-      return ylast;
-   }
-   public static int getCount(){
-      return count; 
-   }
-   public static void main(String[] args) throws UnknownHostException, SocketException, IOException  {
-        
-        
-      new Gui(); 
-    
-      
-      
+
+   public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
       
       DatagramSocket socket = new DatagramSocket();
       SocketAddress addr = socket.getLocalSocketAddress();
@@ -77,8 +60,8 @@ public class Datagram extends Gui{
    
       System.out.println("Socket is bound?");
       System.out.println(socket.isBound());
-      XYLineChart plot = new XYLineChart();  
-        //while(true){
+      XYLineChart plot = new XYLineChart();
+
       while (!socket.isClosed()) {
          socket.receive(packet);
          String data = new String(packet.getData()); // returns buf?
@@ -93,7 +76,7 @@ public class Datagram extends Gui{
       
          String[] dataParsed = data.split(":");
          try {
-                // good packet
+            // good packet
             x = Integer.parseInt(dataParsed[0]);
             xlast = x;
             y = Integer.parseInt(dataParsed[1]);
@@ -102,10 +85,9 @@ public class Datagram extends Gui{
             zlast = z;
             theta = Integer.parseInt(dataParsed[3].trim());
             thetalast = theta;
-                // good packet
          } 
          catch (java.lang.NumberFormatException e) {
-                //corrupted packet;
+            //corrupted packet;
             x = xlast;
             y = ylast;
             z = zlast;
@@ -113,20 +95,17 @@ public class Datagram extends Gui{
          }
       
          String line = ("\n          x:" + x +
-                            "\n          y:" + y +
-                            "\n          z:" + z +
-                            "\norientation:" + theta);
+                        "\n          y:" + y +
+                        "\n          z:" + z +
+                        "\norientation:" + theta);
          System.out.println(line);
-         //plot.createDataset();
-         plot.addData(); 
+
+         plot.addData((double)count, (double)x);
          
-         count++; 
+         count++;
+         if (count==600) break;
       }
-      //}
-      System.out.print("Enter any character to stop server: ");
-       // Read the char
-      char ch = (char) System.in.read();
-      jmdns.unregisterAllServices();
+
       jmdns.unregisterAllServices();
        
       SwingUtilities.invokeLater(

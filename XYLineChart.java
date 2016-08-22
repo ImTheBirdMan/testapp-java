@@ -54,8 +54,8 @@ public class XYLineChart extends JFrame {
    
       return new ChartPanel(chart);
    }
-   public void addData(){
-      series.add(Datagram.getXlast(), Datagram.getCount());
+   public void addData(double x, double y){
+      series.add(x, y);
    }
    public XYDataset createDataset() {
       // creates an XY dataset...
