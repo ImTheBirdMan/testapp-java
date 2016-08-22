@@ -33,6 +33,9 @@ public class Datagram {
         System.out.println("REGISTERED");
         System.out.println("Address:" + InetAddress.getLocalHost().getHostAddress() + ":" + port);
 
+        XYLineChart plot = new XYLineChart("Run speed", dataseries); // listens for events
+        plot.setVisible(true);
+
         int count = 0;
         while (!socket.isClosed() && count < serverUptime) {
             socket.receive(packet);
@@ -78,13 +81,10 @@ public class Datagram {
             );
             System.out.println(line);
             // add 2 values to XYSeries to graph
-            dataseries.add(count, x);
+            dataseries.add(count, x); // sends event to listeners
         }
 
         jmdns.unregisterAllServices();
-
-        XYLineChart plot = new XYLineChart("Run speed", dataseries);
-        plot.setVisible(true);
 
     }
 }

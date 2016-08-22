@@ -12,6 +12,10 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class XYLineChart extends JFrame {
 
     XYSeriesCollection dataset = new XYSeriesCollection();
+    // default labels
+    private String xAxisLabel = "x";
+    private String yAxisLabel = "t";
+    private String chartTitle = " ";
 
     public XYLineChart(String title, XYSeries series) {
         super(title);
@@ -23,9 +27,6 @@ public class XYLineChart extends JFrame {
     }
 
     private JPanel createChartPanel(XYSeries series) {
-        String chartTitle = "Movement Chart";
-        String xAxisLabel = "t";
-        String yAxisLabel = "v";
         dataset.addSeries(series);
         JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
                 xAxisLabel, yAxisLabel, dataset);
