@@ -37,7 +37,7 @@ public class Datagram extends Gui{
    
    
    public static int getXlast(){
-      return xlast; 
+      return x; 
    }
    
    public static int getYlast(){
@@ -46,7 +46,7 @@ public class Datagram extends Gui{
    public static int getCount(){
       return count; 
    }
-   public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
+   public static void main(String[] args) throws UnknownHostException, SocketException, IOException  {
         
         
       new Gui(); 
@@ -77,7 +77,7 @@ public class Datagram extends Gui{
    
       System.out.println("Socket is bound?");
       System.out.println(socket.isBound());
-      GraphPanel g = new GraphPanel();
+      XYLineChart plot = new XYLineChart();  
         //while(true){
       while (!socket.isClosed()) {
          socket.receive(packet);
@@ -117,12 +117,10 @@ public class Datagram extends Gui{
                             "\n          z:" + z +
                             "\norientation:" + theta);
          System.out.println(line);
+         //plot.createDataset();
+         plot.addData(); 
          
-         g.populateGraph(x, count);
          count++; 
-         if (count >= 1000){
-            break; 
-         }
       }
       //}
       System.out.print("Enter any character to stop server: ");
@@ -134,7 +132,8 @@ public class Datagram extends Gui{
       SwingUtilities.invokeLater(
             new Runnable() {
                public void run() {
-                  g.createAndShowGui();
+                  plot.createDataset();
+                  plot.createChartPanel(); 
                }
             });
    
