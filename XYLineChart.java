@@ -28,14 +28,17 @@ import java.util.List;
 
 
 public class XYLineChart extends JFrame {
-   static XYSeriesCollection dataset = new XYSeriesCollection();
-   static boolean autoSort = false;
-   static XYSeries series = new XYSeries("Object", autoSort);
+   XYSeriesCollection dataset = new XYSeriesCollection();
+   boolean autoSort = false;
+   boolean allowDuplicateXValues = false;
+   XYSeries series = new XYSeries("Object 1", autoSort, allowDuplicateXValues);
+
+
    public XYLineChart() {
       super("Packet Data");
       JPanel chartPanel = createChartPanel();
       add(chartPanel, BorderLayout.CENTER);
-      setSize(640, 480);
+      setSize(640, 400);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLocationRelativeTo(null);
    }
@@ -44,18 +47,21 @@ public class XYLineChart extends JFrame {
       String chartTitle = "Movement Chart";
       String xAxisLabel = "X";
       String yAxisLabel = "Packet Count";
-   
-      XYDataset dataset = createDataset();
+      createDataset(); 
+      XYDataset datasetPlot = dataset;
    
       JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
-            xAxisLabel, yAxisLabel, dataset);
+            xAxisLabel, yAxisLabel, datasetPlot);
    
       return new ChartPanel(chart);
    }
+   
+   
+   
    public void addData(){
       series.add(Datagram.getXlast(), Datagram.getCount());
    }
-   public XYDataset createDataset() {
+   public void createDataset() {
       // creates an XY dataset...
       // returns the dataset
       
@@ -69,7 +75,7 @@ public class XYLineChart extends JFrame {
       System.out.print("Dataset Created.\n"); 
       //series.add(Datagram.getXlast(), Datagram.getCount());
       dataset.addSeries(series);   
-      return dataset; 
+       
    }
 
 /*

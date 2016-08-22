@@ -21,19 +21,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.*;
 import javax.swing.SwingUtilities;
+import java.util.Random;
 
-public class Datagram extends Gui{
+public class Datagram extends XYLineChart{
    public static String mServiceName = "JmDNS Server";
    public static final String SERVICE_TYPE = "_IAmTheBirdman._udp.local";
-   static int xlast = 0;
-   static int x = xlast;
-   static int ylast = 0;
-   static int y = ylast;
-   static int zlast = 0;
-   static int z = zlast;
-   static int thetalast = 0;
-   static int theta = thetalast;
-   static int count = 0; 
+   public static int xlast = 0;
+   public static int x = xlast;
+   public static int ylast = 0;
+   public static int y = ylast;
+   public static int zlast = 0;
+   public static int z = zlast;
+   public static int thetalast = 0;
+   public static int theta = thetalast;
+   public static int count = 0; 
    
    
    public static int getXlast(){
@@ -49,7 +50,7 @@ public class Datagram extends Gui{
    public static void main(String[] args) throws UnknownHostException, SocketException, IOException  {
         
         
-      new Gui(); 
+      
     
       
       
@@ -79,6 +80,11 @@ public class Datagram extends Gui{
       System.out.println(socket.isBound());
       XYLineChart plot = new XYLineChart();  
         //while(true){
+        
+        
+      //Random rand = new Random();
+     //int randomNum = rand.nextInt((1000 - 0) + 1) + 0; 
+        
       while (!socket.isClosed()) {
          socket.receive(packet);
          String data = new String(packet.getData()); // returns buf?
@@ -118,13 +124,16 @@ public class Datagram extends Gui{
                             "\norientation:" + theta);
          System.out.println(line);
          //plot.createDataset();
+         //int randomNum = (rand.nextInt((1000 - 0) + 1) + 0);
+         //x = randomNum; 
          plot.addData(); 
          
          count++; 
       }
       //}
+      //plot.initPlot(); 
       System.out.print("Enter any character to stop server: ");
-       // Read the char
+       //Read the char
       char ch = (char) System.in.read();
       jmdns.unregisterAllServices();
       jmdns.unregisterAllServices();
@@ -132,7 +141,8 @@ public class Datagram extends Gui{
       SwingUtilities.invokeLater(
             new Runnable() {
                public void run() {
-                 plot.setVisible(true); 
+                  plot.setVisible(true);
+                  //plot.getAccessibleContext();  
                }
             });
    
