@@ -60,6 +60,7 @@ public class Datagram extends Gui{
    
       System.out.println("Socket is bound?");
       System.out.println(socket.isBound());
+
       XYLineChart plot = new XYLineChart();
 
       while (!socket.isClosed()) {
