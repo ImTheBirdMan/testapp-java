@@ -47,13 +47,7 @@ public class Datagram extends Gui{
       return count; 
    }
    public static void main(String[] args) throws UnknownHostException, SocketException, IOException {
-        
-        
-      new Gui(); 
-    
-      
-      
-      
+
       DatagramSocket socket = new DatagramSocket();
       SocketAddress addr = socket.getLocalSocketAddress();
       System.out.println(addr);
