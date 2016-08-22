@@ -28,15 +28,13 @@ import java.util.List;
 
 
 public class XYLineChart extends JFrame {
-  static XYSeriesCollection dataset = new XYSeriesCollection();
+   static XYSeriesCollection dataset = new XYSeriesCollection();
    static boolean autoSort = false;
    static XYSeries series = new XYSeries("Object", autoSort);
    public XYLineChart() {
-      super("XY Line Chart Example with JFreechart");
-   
+      super("Packet Data");
       JPanel chartPanel = createChartPanel();
       add(chartPanel, BorderLayout.CENTER);
-   
       setSize(640, 480);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setLocationRelativeTo(null);
