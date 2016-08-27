@@ -59,7 +59,7 @@ public class Datagram {
         mSocket.setReuseAddress(true);
         //mSocket.setSoTimeout(5000);
         NetworkInterface nic = NetworkInterface.getByName(adapterName);
-        mSocket.joinGroup(InetAddress.getByName(multicastGroup));
+        //mSocket.joinGroup(InetAddress.getByName(multicastGroup));
 
         //DatagramSocket socket = new DatagramSocket();
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
