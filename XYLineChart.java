@@ -11,25 +11,25 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class XYLineChart extends JFrame {
 
-    XYSeriesCollection dataset = new XYSeriesCollection();
-    // default labels
-    private String xAxisLabel = "x";
-    private String yAxisLabel = "t";
-    private String chartTitle = " ";
+  XYSeriesCollection dataset = new XYSeriesCollection();
+  // default labels
+  private String xAxisLabel = "x";
+  private String yAxisLabel = "t";
+  private String chartTitle = " ";
 
-    public XYLineChart(String title, XYSeries series) {
-        super(title);
-        JPanel chartPanel = createChartPanel(series);
-        add(chartPanel,BorderLayout.CENTER);
-        setSize(640, 480);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-    }
+  public XYLineChart(String title, XYSeries series) {
+    super(title);
+    JPanel chartPanel = createChartPanel(series);
+    add(chartPanel,BorderLayout.CENTER);
+    setSize(640, 480);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocationRelativeTo(null);
+  }
 
-    private JPanel createChartPanel(XYSeries series) {
-        dataset.addSeries(series);
-        JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
-                xAxisLabel, yAxisLabel, dataset);
-        return new ChartPanel(chart);
-    }
+  private JPanel createChartPanel(XYSeries series) {
+    dataset.addSeries(series);
+    JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
+            xAxisLabel, yAxisLabel, dataset);
+    return new ChartPanel(chart);
+  }
 }
