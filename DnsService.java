@@ -28,16 +28,27 @@ public class DnsService {
     }
     static String []serviceUrls;
 
-    static String mServiceName = "JmDNS Server";
+    static String DEFAULT_SERVICE_NAME = "JmDNS Server";
     static String SERVICE_TYPE = "_IAmTheBirdman._udp.local";
     static int serverUptime = 600; // packets
     static boolean client = false;
     static public void main(String[] args) throws UnknownHostException, SocketException, IOException {
 
-        final int DEFAULT_MULTICAST_PORT = 5555;
-
+        final int DEFAULT_PORT = 5555;
+        String hostname = DEFAULT_SERVICE_NAME;
+        try
+        {
+            InetAddress my_addr;
+            my_addr = InetAddress.getLocalHost();
+            hostname = my_addr.getHostName();
+        }
+        catch (UnknownHostException ex)
+        {
+            System.out.println("Hostname can not be resolved");
+            hostname = DEFAULT_SERVICE_NAME;
+        }
         JmDNS jmdns = JmDNS.create();
-        ServiceInfo info = ServiceInfo.create(SERVICE_TYPE, mServiceName, DEFAULT_MULTICAST_PORT, "App service");
+        ServiceInfo info = ServiceInfo.create(SERVICE_TYPE, hostname, DEFAULT_PORT, "App service");
         jmdns.unregisterAllServices();
         jmdns.registerService(info);
 

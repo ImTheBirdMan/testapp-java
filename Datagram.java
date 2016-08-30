@@ -30,7 +30,7 @@ public class Datagram {
         }
     }
     static String []serviceUrls;
-    static String mServiceName = "JmDNS Server";
+    static String DEFAULT_SERVICE_NAME = "JmDNS Server";
     static String SERVICE_TYPE = "_IAmTheBirdman._udp.local";
     static int serverUptime = 600; // packets
     static boolean client = false;
@@ -44,39 +44,18 @@ public class Datagram {
 
         byte[] buf = new byte[64];
 
-        final int DEFAULT_MULTICAST_PORT = 5555;
-        final String multicastGroup = "225.4.5.6";
-        final String adapterName = "eth5";
-
-
-        /*
-        Enumeration<NetworkInterface> nets = NetworkInterface.getNetworkInterfaces();
-        for (NetworkInterface netint : Collections.list(nets))
-            displayInterfaceInformation(netint);
-        */
-
-        MulticastSocket mSocket = new MulticastSocket(DEFAULT_MULTICAST_PORT);
-        mSocket.setReuseAddress(true);
-        //mSocket.setSoTimeout(5000);
-        NetworkInterface nic = NetworkInterface.getByName(adapterName);
-        //mSocket.joinGroup(InetAddress.getByName(multicastGroup));
-
-        //DatagramSocket socket = new DatagramSocket();
-        DatagramPacket packet = new DatagramPacket(buf, buf.length);
-
-        /* new */
-        //InetAddress group = InetAddress.getByName("224.0.1.1");
-        //MulticastSocket socket = new MulticastSocket();
-        //socket.joinGroup(group);
-        /* new */
-
-        //int port = socket.getLocalPort();
+        final int DEFAULT_PORT = 5555;
         InetAddress addr = InetAddress.getLocalHost();
-        //addr = multicastGroup;
         String hostname = InetAddress.getByName(addr.getHostName()).toString();
+        InetSocketAddress s_addr = new InetSocketAddress(addr, DEFAULT_PORT);
+        System.out.println(s_addr);
+        DatagramSocket mSocket = new DatagramSocket(null);
+        mSocket.bind(s_addr);
+        System.out.println(addr);
+        mSocket.setReuseAddress(true);
 
         JmDNS jmdns = JmDNS.create();
-        ServiceInfo info = ServiceInfo.create(SERVICE_TYPE, mServiceName, DEFAULT_MULTICAST_PORT, "App service");
+        ServiceInfo info = ServiceInfo.create(SERVICE_TYPE, hostname, DEFAULT_PORT, "App service");
         jmdns.unregisterAllServices();
         jmdns.registerService(info);
 
@@ -84,6 +63,7 @@ public class Datagram {
 
         XYLineChart plot = new XYLineChart("Run speed", dataseries); // listens for events
         plot.setVisible(true);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
         int count = 0;
 
@@ -91,6 +71,7 @@ public class Datagram {
             jmdns.unregisterAllServices();
             jmdns.addServiceListener("_IAmPhone._udp.local.", new SampleListener());
         }
+
         while (!mSocket.isClosed() && count < serverUptime) {
             mSocket.receive(packet);
             count++;
